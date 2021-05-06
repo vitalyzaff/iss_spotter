@@ -27,16 +27,16 @@ const fetchCoordsByIP = function(ip, callback) {
   });
 };
 
-const fetchISSFlyOverTimes = function(coords, callback) {
-  request(`http://api.open-notify.org/iss-pass.json?lat=UKNOWN&lon=UKNOWN`, (error, response, body) => {
-    const data = JSON.parse(body);
+const fetchISSFlyOverTimes = function(geo, callback) {
+  request(`http://api.open-notify.org/iss-pass.json?lat=${geo.latitude}&lon=${geo.longitude}`, (error, response, body) => {
+    const passes = JSON.parse(body).response;
     if (error) {
       return callback(error, null);
-    } if (response.statusCode !== 400) {
+    } if (response.statusCode !== 200) {
       const msg = `Status Code ${response.statusCode} when fetching Coordinates for ISS. Response: ${body}`;
       return callback(Error(msg), null);
     }
-    callback(null, [data]);
+    callback(null, passes);
   });
 };
 

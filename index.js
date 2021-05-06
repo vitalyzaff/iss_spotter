@@ -34,6 +34,8 @@ const printPassTimes = function(passTimes) {
   }
 };
 
+module.exports = { printPassTimes };
+
 
 nextISSTimesForMyLocation((error, passTimes) => {
   if (error) {
